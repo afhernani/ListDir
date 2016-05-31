@@ -1,0 +1,141 @@
+Notas uso de flowLayouPanel.
+
+SqlDataAdapter da = new SqlDataAdapter("select * from Items order by ItemsName", cn);
+
+        DataTable dt = new DataTable();
+        da.Fill(dt);
+
+        for (int i = 0; i < dt.Rows.Count; i++)
+        {
+            Button btn = new Button();
+            btn.Name = "btn" + dt.Rows[i][1];
+            btn.Tag = dt.Rows[i][1];
+            btn.Text = dt.Rows[i][2].ToString();
+            btn.Font = new Font("Arial", 14f, FontStyle.Bold);
+            // btn.UseCompatibleTextRendering = true;
+            btn.BackColor = Color.Green;
+            btn.Height = 57;
+            btn.Width = 116;
+            btn.Click += button1_Click;   //  set any method
+            btn.Enter += button1_Enter;   // 
+            btn.Leave += button1_Leave;   //
+
+
+            flowLayoutPanel1.Controls.Add(btn);                
+
+        }
+
+class Program
+{
+    static void Main()
+    {
+	string p = @"C:\Users\Sam\Documents\Test.txt";
+
+	string e = Path.GetExtension(p);
+	if (e == ".txt")
+	{
+	    Console.WriteLine(e);
+	}
+    }
+}
+
+
+//Le pasas el indice de la imagen que se agrego en el control ImageList
+boton.Image = imageList1.Images[0];
+
+
+button.BackgroundImage = Image.FromFile(@"rutaImagen.jpg");
+
+Otra:
+
+Código
+FileStream file = new FileStream("rutaImagen.jpg", FileMode.Open);
+Image toLoad = Image.FromStream(file);
+button.Image = toLoad;
+ 
+
+DirectoryInfo[] dirInfos = drivInfo.GetDirectories("*.*");
+                if (dirInfos != null)
+                {
+                    foreach (DirectoryInfo d in dirInfos)
+                    {
+                        Button btn = new Button();
+                        btn.Text = d.FullName;
+                        
+
+                        btn.BackColor = Color.Yellow;
+                        //btn.Height = 128;
+                        //btn.Width = 128;
+                        btn.Image=imageList1.Images[0];
+                        btn.Click += button1_Click;
+
+                        flowPanel.Controls.Add(btn);
+                    }
+
+
+//carga de datos en flowLayoutPanel:
+
+
+DirectoryInfo[] dirInfos = drivInfo.GetDirectories("*.*");
+                if (dirInfos != null)
+                {
+                    foreach (DirectoryInfo d in dirInfos)
+                    {
+                        /**
+                        PictureBox _ptbox = new PictureBox();
+                        _ptbox.Image = imageList1.Images[0];
+                        _ptbox.Name = d.FullName;
+                        _ptbox.Click += pictureBox_clik;
+
+                        flowPanel.Controls.Add(_ptbox);
+                         * */
+                        Button btn = new Button();
+                        btn.Text = d.FullName;
+
+
+                        //btn.BackColor = Color.Yellow;
+                        btn.Height = 60;
+                        btn.Width = 80;
+                        btn.Image = imageList1.Images[0];
+                        btn.Click += button1_Click;
+
+                        flowPanel.Controls.Add(btn);
+                    }
+                }
+
+
+////
+para saber si tiene hijos el nodo seleccionado y no volver a añadirlos
+
+Private Sub TreeView1_NodeClick(ByVal Node As MSComctlLib.Node)
+    Dim n As Integer, i As Integer, orden As Integer, folder() As String, j As Integer, s As String
+    If TreeView1.Nodes.Count > 0 Then   'si hay mas de un nombre de Nodo encontrado
+        If TreeView1.SelectedItem.Index = 1 Then Exit Sub
+        LabelNodes.Visible = False
+        n = TreeView1.Item.Children 'nº de nodos secundarios de Node, si los tiene
+        ListBusca.Clear 'limpia el ListBox donde guarda los nombres de nodos sin hijos del TreeView
+        If n > 0 Then
+            LabelNodes = n & " Items"
+            LabelNodes.Visible = True
+            NodoName = Node.FullPath & "\"  'guarda el Path para comparar
+            orden = TreeView1.SelectedItem.Index    'nº de orden del nodo seleccionado
+            For i = 1 To TreeView1.Nodes.Count
+                If TreeView1.Nodes(orden + i).Children = 0 Then
+                    folder = Split(TreeView1.Nodes(orden + i).FullPath, "\")
+                    s = ""
+                    For j = 0 To UBound(folder) - 1
+                        s = s & folder(j) & "\"
+                    Next
+                    If s = NodoName Then
+                        ListBusca.AddItem TreeView1.Nodes(orden + i).Text
+                    End If
+                    If UBound(folder) < 2 Then Exit For
+                End If
+            Next
+            Form1.BuscarTree    'salta al Sub donde se procesa la busqueda
+        Else
+            ListBusca.AddItem Node
+            Form1.BuscarTree
+        End If
+    End If
+End Sub
